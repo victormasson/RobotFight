@@ -39,7 +39,9 @@
             var right = $( window ).width(); 
             var down = $( window ).height();
 
-            console.log("left: " + left + ' ' + "top: " + top);
+            console.log("left: " + left + ' ' + "top: " + top + ' ' + "right: " + right + ' ' + "down: " + down);
+
+            var a =12;
 
             switch (e.which) {
                 case 37: // Left
@@ -50,23 +52,25 @@
                     }
                     break;
                 case 38: // Up
-                    if (top > 0) {
+                    if (top - 25 > 0) {
                         $(".robot").finish().animate({
                             top: "-=20"
                         });
                     }
                     break;
                 case 39: // Right
-                    
-
-                    $(".robot").finish().animate({
-                        left: "+=20"
-                    });
+                    if (left + 200 < right) {
+                        $(".robot").finish().animate({
+                            left: "+=20"
+                        });
+                    }
                     break;
                 case 40: // Down
-                    $(".robot").finish().animate({
-                        top: "+=20"
-                    });
+                    if (top + 350 < down) {
+                        $(".robot").finish().animate({
+                            top: "+=20"
+                        });
+                    }
                     break;
 
                 default:
