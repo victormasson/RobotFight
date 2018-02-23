@@ -53,25 +53,25 @@
                     }
                     break;
                 case 38: // Up
-                    if (top - 25 > 0) {
+                if (top - 25 > 0) {
                         $(".robot").finish().animate({
                             top: "-=20"
                         });
                     }
                     break;
                 case 39: // Right
-                    if (left + 200 < right) {
-                        $(".robot").finish().animate({
-                            left: "+=20"
-                        });
-                    }
+                if (left + 200 < right) {                    
+                    $(".robot").finish().animate({
+                        left: "+=20"
+                    });
+                }
                     break;
                 case 40: // Down
-                    if (top + 350 < down) {
-                        $(".robot").finish().animate({
-                            top: "+=20"
-                        });
-                    }
+                if (top + 350 < down) {
+                    $(".robot").finish().animate({
+                        top: "+=20"
+                    });
+                }
                     break;
 
                 default:
@@ -91,8 +91,24 @@
                 console.log('message: ' + msg);
             });
 
-            socket.on('nbJoueurs', function(nbJ){
-                console.log('nbJoueurs: ' + nbJ);
+            socket.on('btnLeft', function(nbJ){
+                console.log('btnLeft: ' + nbJ);
+                socket.emit('btnLeft',$('#target').val());                
+            });
+
+            socket.on('btnRight', function(nbJ){
+                console.log('btnRight: ' + nbJ);
+                socket.emit('btnRight',$('#target').val());                
+            });
+
+            socket.on('btnTop', function(nbJ){
+                console.log('btnTop: ' + nbJ);
+                socket.emit('btnTop',$('#target').val());                
+            });
+
+            socket.on('btnDown', function(nbJ){
+                console.log('btnDown: ' + nbJ);
+                socket.emit('btnDown',$('#target').val());                
             });
 
         });
