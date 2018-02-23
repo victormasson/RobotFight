@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <style type="text/css">
         .robot{
             width: 100px;
@@ -50,15 +51,10 @@
         const btnRight = '#btnRight';
 
         /**
-         * Robot
-         */
-        
-        // console.log("left: " + left + ' ' + "top: " + top + ' ' + "right: " + right + ' ' + "down: " + down);
-
-        /**
          * Event
          */
         $(btnLeft).on( "click", function() {
+            
             var position = $(robot1).position();
             var left = position.left;
             var top = position.top;
