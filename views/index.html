@@ -21,53 +21,110 @@
     <form action="">
         <input id="target" type="text">
     </form>
-    <div class="robot">
+    <div class="robot" id="robot1">
         <img src="/asset/robot.jpg" />
     </div>
 
+    <div class="robot" id="robot2">
+        <img src="/asset/robot.jpg" />
+    </div>
+
+
+    <input type="button" id="btnTop">
+    <input type="button" id="btnDown">
+    <input type="button" id="btnLeft">
+    <input type="button" id="btnRight">
+
     <script type="text/javascript">
-        $(document).keydown(function(e) {
-            //var code = (e.keyCode ? e.keyCode : e.which);
+        var robot1 = '#robot1';
+        var robot2 = '#robot2';
+
+        /**
+         * Permet au robot1 de bouger
+         */
+         $(document).keydown(function(e) {
             console.log(e.which);
 
-            // height : hauteur
-            // width : largeur
-
-            var position = $(".robot").position();
+            var position = $(robot1).position();
             var left = position.left;
             var top = position.top;
             var right = $( window ).width(); 
             var down = $( window ).height();
-
             console.log("left: " + left + ' ' + "top: " + top + ' ' + "right: " + right + ' ' + "down: " + down);
 
-            var a =12;
+            switch (e.which) {
+                case 81: // Q
+                    if (left > 0) {
+                        $(robot1).finish().animate({
+                            left: "-=20"
+                        });
+                    }
+                    break;
+                case 90: // Z
+                    if (top - 25 > 0) {
+                        $(robot1).finish().animate({
+                            top: "-=20"
+                        });
+                    }
+                    break;
+                case 68: // D
+                    if (left + 200 < right) {
+                        $(robot1).finish().animate({
+                            left: "+=20"
+                        });
+                    }
+                    break;
+                case 83: // S
+                    if (top + 350 < down) {
+                        $(robot1).finish().animate({
+                            top: "+=20"
+                        });
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+        /**
+         * Permet au robot2 de bouger
+         */
+        $(document).keydown(function(e) {
+            console.log(e.which);
+
+            var position = $(robot2).position();
+            var left = position.left;
+            var top = position.top;
+            var right = $( window ).width(); 
+            var down = $( window ).height();
+            console.log("left: " + left + ' ' + "top: " + top + ' ' + "right: " + right + ' ' + "down: " + down);
 
             switch (e.which) {
                 case 37: // Left
                     if (left > 0) {
-                        $(".robot").finish().animate({
+                        $(robot2).finish().animate({
                             left: "-=20"
                         });
                     }
                     break;
                 case 38: // Up
                     if (top - 25 > 0) {
-                        $(".robot").finish().animate({
+                        $(robot2).finish().animate({
                             top: "-=20"
                         });
                     }
                     break;
                 case 39: // Right
                     if (left + 200 < right) {
-                        $(".robot").finish().animate({
+                        $(robot2).finish().animate({
                             left: "+=20"
                         });
                     }
                     break;
                 case 40: // Down
                     if (top + 350 < down) {
-                        $(".robot").finish().animate({
+                        $(robot2).finish().animate({
                             top: "+=20"
                         });
                     }
