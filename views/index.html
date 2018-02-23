@@ -106,8 +106,24 @@
                 console.log('message: ' + msg);
             });
 
-            socket.on('nbJoueurs', function(nbJ){
-                console.log('nbJoueurs: ' + nbJ);
+            socket.on('btnLeft', function(nbJ){
+                console.log('btnLeft: ' + nbJ);
+                socket.emit('btnLeft',$('#target').val());                
+            });
+
+            socket.on('btnRight', function(nbJ){
+                console.log('btnRight: ' + nbJ);
+                socket.emit('btnRight',$('#target').val());                
+            });
+
+            socket.on('btnTop', function(nbJ){
+                console.log('btnTop: ' + nbJ);
+                socket.emit('btnTop',$('#target').val());                
+            });
+
+            socket.on('btnDown', function(nbJ){
+                console.log('btnDown: ' + nbJ);
+                socket.emit('btnDown',$('#target').val());                
             });
 
         });

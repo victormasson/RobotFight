@@ -21,6 +21,26 @@ io.on('connection', function(socket){
         socket.broadcast.emit('nbJoueurs','Nombre de joueurs: ' + nbJ);
     });   
 
+    socket.on('btnLeft', function(){
+        console.log('btnLeft');
+        socket.broadcast.emit('btnLeft');
+    });
+
+    socket.on('btnRight', function(){
+        console.log('btnRight');
+        socket.broadcast.emit('btnRight');
+    });
+
+    socket.on('btnTop', function(){
+        console.log('btnTop');
+        socket.broadcast.emit('broadcast');
+    });
+
+    socket.on('btnDown', function(){
+        console.log('btnDown');
+        socket.broadcast.emit('btnDown');
+    });
+
   });
 
 var app = express();
