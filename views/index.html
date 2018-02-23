@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <style type="text/css">
         .robot{
             width: 100px;
@@ -65,11 +66,22 @@
             var right = $( window ).width(); 
             var down = $( window ).height();
 
-            if (left > 0) {
-                $(robot1).finish().animate({
-                    left: "-=20"
-                });
-            }
+            socket.emit('btnLeft');                            
+            
+            // if (left > 0) {
+            //     $(robot1).finish().animate({
+            //         left: "-=20"
+            //     });
+            // }
+        });
+
+        socket.on('btnLeft', function(placeBonome){
+            console.log('placeBonome: ' + placeBonome)
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            left = placeBonome.x;
+            top = placeBonome.y;
         });
 
         $(btnTop).on( "click", function() {
@@ -79,11 +91,22 @@
             var right = $( window ).width(); 
             var down = $( window ).height();
 
-            if (top - 25 > 0) {
-                $(robot1).finish().animate({
-                    top: "-=20"
-                });
-            }
+            socket.emit('btnTop');                            
+
+            // if (top - 25 > 0) {
+            //     $(robot1).finish().animate({
+            //         top: "-=20"
+            //     });
+            // }
+        });
+
+        socket.on('btnTop', function(placeBonome){
+            console.log('placeBonome: ' + placeBonome)
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            left = placeBonome.x;
+            top = placeBonome.y;
         });
 
         $(btnRight).on( "click", function() {
@@ -93,11 +116,22 @@
             var right = $( window ).width(); 
             var down = $( window ).height();
 
-            if (left + 200 < right) {
-                $(robot1).finish().animate({
-                    left: "+=20"
-                });
-            }
+            socket.emit('btnRight');                                        
+
+            // if (left + 200 < right) {
+            //     $(robot1).finish().animate({
+            //         left: "+=20"
+            //     });
+            // }
+        });
+
+        socket.on('btnRight', function(placeBonome){
+            console.log('placeBonome: ' + placeBonome)
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            left = placeBonome.x;
+            top = placeBonome.y;
         });
 
         $(btnDown).on( "click", function() {
@@ -107,45 +141,26 @@
             var right = $( window ).width(); 
             var down = $( window ).height();
 
-            if (top + 350 < down) {
-                $(robot1).finish().animate({
-                    top: "+=20"
-                });
-            }
+            socket.emit('btnDown');                                        
+            
+            // if (top + 350 < down) {
+            //     $(robot1).finish().animate({
+            //         top: "+=20"
+            //     });
+            // }
+        });
+
+        socket.on('btnDown', function(placeBonome){
+            console.log('placeBonome: ' + placeBonome)
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            left = placeBonome.x;
+            top = placeBonome.y;
         });
 
         $(function () {
             var socket = io();
-
-            $('#btnPlay').click(function(){
-                console.log($('#target').val());
-                socket.emit('message',$('#target').val());
-            });
-
-            socket.on('message', function(msg){
-                console.log('message: ' + msg);
-            });
-
-            socket.on('btnLeft', function(nbJ){
-                console.log('btnLeft: ' + nbJ);
-                socket.emit('btnLeft',$('#target').val());                
-            });
-
-            socket.on('btnRight', function(nbJ){
-                console.log('btnRight: ' + nbJ);
-                socket.emit('btnRight',$('#target').val());                
-            });
-
-            socket.on('btnTop', function(nbJ){
-                console.log('btnTop: ' + nbJ);
-                socket.emit('btnTop',$('#target').val());                
-            });
-
-            socket.on('btnDown', function(nbJ){
-                console.log('btnDown: ' + nbJ);
-                socket.emit('btnDown',$('#target').val());                
-            });
-
         });
     </script>
 </body>

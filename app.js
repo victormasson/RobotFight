@@ -2,6 +2,8 @@ const express = require('express');
 const http = require('http').Server(express);
 const io = require('socket.io')(http);
 
+var placeBonome = { x : 0, y : 0 };
+
 //Création écouteur sockets
 io.on('connection', function(socket){
     console.log('a user connected');
@@ -22,23 +24,31 @@ io.on('connection', function(socket){
     });   
 
     socket.on('btnLeft', function(){
-        console.log('btnLeft');
-        socket.broadcast.emit('btnLeft');
+        if (left > 0) {
+            placeBonome.x -= 20;
+        }
+        socket.broadcast.emit('btnLeft', placeBonome);
     });
 
     socket.on('btnRight', function(){
-        console.log('btnRight');
-        socket.broadcast.emit('btnRight');
+        if (left + 200 < right) {
+            placeBonome.x += 20;
+        }
+        socket.broadcast.emit('btnRight', placeBonome);
     });
 
     socket.on('btnTop', function(){
-        console.log('btnTop');
-        socket.broadcast.emit('broadcast');
+        if (top - 25 > 0) {
+            placeBonome.y += 20;
+        }
+        socket.broadcast.emit('btnTop', placeBonome);
     });
 
     socket.on('btnDown', function(){
-        console.log('btnDown');
-        socket.broadcast.emit('btnDown');
+        if (top + 350 < down) {
+            placeBonome.y -= 20;
+        }
+        socket.broadcast.emit('btnDown', placeBonome);
     });
 
   });
