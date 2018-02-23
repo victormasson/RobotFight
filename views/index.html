@@ -52,17 +52,19 @@
         /**
          * Robot
          */
-        var position = $(robot1).position();
-        var left = position.left;
-        var top = position.top;
-        var right = $( window ).width(); 
-        var down = $( window ).height();
-        console.log("left: " + left + ' ' + "top: " + top + ' ' + "right: " + right + ' ' + "down: " + down);
+        
+        // console.log("left: " + left + ' ' + "top: " + top + ' ' + "right: " + right + ' ' + "down: " + down);
 
         /**
          * Event
          */
         $(btnLeft).on( "click", function() {
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            var right = $( window ).width(); 
+            var down = $( window ).height();
+
             if (left > 0) {
                 $(robot1).finish().animate({
                     left: "-=20"
@@ -71,6 +73,12 @@
         });
 
         $(btnTop).on( "click", function() {
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            var right = $( window ).width(); 
+            var down = $( window ).height();
+
             if (top - 25 > 0) {
                 $(robot1).finish().animate({
                     top: "-=20"
@@ -79,6 +87,12 @@
         });
 
         $(btnRight).on( "click", function() {
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            var right = $( window ).width(); 
+            var down = $( window ).height();
+
             if (left + 200 < right) {
                 $(robot1).finish().animate({
                     left: "+=20"
@@ -87,6 +101,12 @@
         });
 
         $(btnDown).on( "click", function() {
+            var position = $(robot1).position();
+            var left = position.left;
+            var top = position.top;
+            var right = $( window ).width(); 
+            var down = $( window ).height();
+
             if (top + 350 < down) {
                 $(robot1).finish().animate({
                     top: "+=20"
