@@ -10,8 +10,8 @@
         .robot{
             width: 100px;
             height: 100px;
-            position: relative;
-            margin: 200px auto 0;
+            position: absolute;
+            /* margin: 0px auto 0; */
             background: yellowgreen;
         }
     </style>
@@ -26,13 +26,6 @@
     </div>
 
     <script type="text/javascript">
-        function getHeight() {
-            return $(".robot").height();
-        }
-        function getWhich() {
-            return $(".robot").which();
-        }
-
         $(document).keydown(function(e) {
             //var code = (e.keyCode ? e.keyCode : e.which);
             console.log(e.which);
@@ -43,6 +36,10 @@
             var position = $(".robot").position();
             var left = position.left;
             var top = position.top;
+            var right = $( window ).width(); 
+            var down = $( window ).height();
+
+            console.log("left: " + left + ' ' + "top: " + top);
 
             switch (e.which) {
                 case 37: // Left
@@ -51,18 +48,17 @@
                             left: "-=20"
                         });
                     }
-                    else {
-                        $(".robot").width(0);
-                    }
                     break;
                 case 38: // Up
-                    if (top < 0) {
+                    if (top > 0) {
                         $(".robot").finish().animate({
                             top: "-=20"
                         });
                     }
                     break;
                 case 39: // Right
+                    
+
                     $(".robot").finish().animate({
                         left: "+=20"
                     });
