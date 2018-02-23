@@ -1,71 +1,76 @@
+const app = require('express')();
 const express = require('express');
-const http = require('http').Server(express);
+const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-var placeBonome = { x : 0, y : 0 };
-
-//Création écouteur sockets
-io.on('connection', function(socket){
-    console.log('a user connected');
-    console.log(socket);
-
-    socket.on('disconnect', function(){
-      console.log('user disconnected');
-    });
-
-    socket.on('message', function(msg){
-      console.log('message: ' + msg);
-      socket.broadcast.emit('message','message envoyé: ' + msg);
-    });   
-
-    socket.on('nbJoueurs', function(nbJ){
-        console.log('nbJoueurs: ' + nbJ);
-        socket.broadcast.emit('nbJoueurs','Nombre de joueurs: ' + nbJ);
-    });   
-
-    socket.on('btnLeft', function(){
-        if (left > 0) {
-            placeBonome.x -= 20;
-        }
-        socket.broadcast.emit('btnLeft', placeBonome);
-    });
-
-    socket.on('btnRight', function(){
-        if (left + 200 < right) {
-            placeBonome.x += 20;
-        }
-        socket.broadcast.emit('btnRight', placeBonome);
-    });
-
-    socket.on('btnTop', function(){
-        if (top - 25 > 0) {
-            placeBonome.y += 20;
-        }
-        socket.broadcast.emit('btnTop', placeBonome);
-    });
-
-    socket.on('btnDown', function(){
-        if (top + 350 < down) {
-            placeBonome.y -= 20;
-        }
-        socket.broadcast.emit('btnDown', placeBonome);
-    });
-
-  });
-
-var app = express();
-//app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
 app.use('/asset', express.static(__dirname + '/img/'));
-app.listen(3000);
+
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/views/index.html');
 });
 
-io.on('connection', function(socket) {
+// io.on('connection', function(socket) {
+//     console.log('a user connected');
+// });
+
+var placeBonome = { left : 0, top : 0 };
+var placeWindows = { right : 0, down : 0 };
+
+//Création écouteur sockets
+io.on('connection', function(socket){
     console.log('a user connected');
+    // console.log(socket);
+
+    socket.on('btnPlay', function(msg){
+        console.log(msg);
+        placeWindows.right = msg.wRight;
+        placeWindows.down = msg.wDown;
+    });
+
+    socket.on('btnLeft', function(){
+        console.log('btnLeft');
+        if (placeBonome.left > 0) {
+            placeBonome.left -= 20;
+            console.log('btnLeft: ' + placeBonome.left);
+        
+        }
+        socket.emit('btnLeft', placeBonome);
+        socket.broadcast.emit('btnLeft', placeBonome);
+    });
+
+    socket.on('btnRight', function(){
+        if (placeBonome.left + 200 < placeWindows.right) {
+            placeBonome.left += 20;
+            console.log('btnRight: ' + placeBonome.left);
+        }
+        socket.emit('btnRight', placeBonome);
+        socket.broadcast.emit('btnRight', placeBonome);
+    });
+
+    socket.on('btnTop', function(){
+        console.log('btnTop');
+        if (placeBonome.top - 25 > 0) {
+            placeBonome.top -= 20;
+            console.log('btnTop: ' + placeBonome.top);
+        }
+        socket.emit('btnTop', placeBonome);
+        socket.broadcast.emit('btnTop', placeBonome);
+    });
+
+    socket.on('btnDown', function(){
+        console.log('btnDown');
+        if (placeBonome.top + 350 < placeWindows.down) {
+            placeBonome.top += 20;
+            console.log('btnDown: ' + placeBonome.top);
+        }
+        socket.emit('btnDown', placeBonome);
+        socket.broadcast.emit('btnDown', placeBonome);
+    });
 });
 
-// http.listen(3000, function(){
-//     console.log('listening on *:3000');
-// });
+
+
+http.listen(3000, function(){
+    console.log('listening on *:3000');
+});

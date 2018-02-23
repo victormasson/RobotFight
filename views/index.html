@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <style type="text/css">
         .robot{
             width: 100px;
@@ -45,117 +45,65 @@
          * Const
          */
         const robot1 = '#robot1';
+        const btnPlay = '#btnPlay';
         const btnTop = '#btnTop';
         const btnDown = '#btnDown';
         const btnLeft = '#btnLeft';
         const btnRight = '#btnRight';
-
-        /**
-         * Event
-         */
-        $(btnLeft).on( "click", function() {
-            
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            var right = $( window ).width(); 
-            var down = $( window ).height();
-
-            socket.emit('btnLeft');                            
-            
-            // if (left > 0) {
-            //     $(robot1).finish().animate({
-            //         left: "-=20"
-            //     });
-            // }
-        });
-
-        socket.on('btnLeft', function(placeBonome){
-            console.log('placeBonome: ' + placeBonome)
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            left = placeBonome.x;
-            top = placeBonome.y;
-        });
-
-        $(btnTop).on( "click", function() {
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            var right = $( window ).width(); 
-            var down = $( window ).height();
-
-            socket.emit('btnTop');                            
-
-            // if (top - 25 > 0) {
-            //     $(robot1).finish().animate({
-            //         top: "-=20"
-            //     });
-            // }
-        });
-
-        socket.on('btnTop', function(placeBonome){
-            console.log('placeBonome: ' + placeBonome)
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            left = placeBonome.x;
-            top = placeBonome.y;
-        });
-
-        $(btnRight).on( "click", function() {
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            var right = $( window ).width(); 
-            var down = $( window ).height();
-
-            socket.emit('btnRight');                                        
-
-            // if (left + 200 < right) {
-            //     $(robot1).finish().animate({
-            //         left: "+=20"
-            //     });
-            // }
-        });
-
-        socket.on('btnRight', function(placeBonome){
-            console.log('placeBonome: ' + placeBonome)
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            left = placeBonome.x;
-            top = placeBonome.y;
-        });
-
-        $(btnDown).on( "click", function() {
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            var right = $( window ).width(); 
-            var down = $( window ).height();
-
-            socket.emit('btnDown');                                        
-            
-            // if (top + 350 < down) {
-            //     $(robot1).finish().animate({
-            //         top: "+=20"
-            //     });
-            // }
-        });
-
-        socket.on('btnDown', function(placeBonome){
-            console.log('placeBonome: ' + placeBonome)
-            var position = $(robot1).position();
-            var left = position.left;
-            var top = position.top;
-            left = placeBonome.x;
-            top = placeBonome.y;
-        });
+        var windRight = $( window ).width(); 
+        var windDown = $( window ).height();
 
         $(function () {
             var socket = io();
+            $(btnPlay).on( "click", function() {
+                var wind = { wRight : windRight, wDown : windDown };
+                console.log('right: ' + wind.wRight + ' ' + 'down: ' + wind.wDown);
+                socket.emit('btnPlay', wind);
+            });
+
+
+            /**
+             * Event
+             */
+            $(btnLeft).on( "click", function() {
+                socket.emit('btnLeft');
+            });
+
+            socket.on('btnLeft', function(placeBonome){
+                console.log('placeBonome: ' + placeBonome);
+                $(robot1).css('left', placeBonome.left);
+                $(robot1).css('top', placeBonome.top);
+            });
+
+            $(btnTop).on( "click", function() {
+                socket.emit('btnTop');
+            });
+
+            socket.on('btnTop', function(placeBonome){
+                console.log('placeBonome: ' + placeBonome);
+                $(robot1).css('left', placeBonome.left);
+                $(robot1).css('top', placeBonome.top);
+            });
+
+            $(btnRight).on( "click", function() {
+                socket.emit('btnRight');
+            });
+
+            socket.on('btnRight', function(placeBonome){
+                console.log('placeBonome: ' + placeBonome);
+                $(robot1).css('left', placeBonome.left);
+                $(robot1).css('top', placeBonome.top);
+            });
+
+            $(btnDown).on( "click", function() {
+                socket.emit('btnDown');
+            });
+
+            socket.on('btnDown', function(placeBonome){
+                console.log('placeBonome: ' + placeBonome);
+                $(robot1).css('left', placeBonome.left);
+                $(robot1).css('top', placeBonome.top);
+            });
         });
     </script>
 </body>
