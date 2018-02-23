@@ -27,7 +27,7 @@
 <body>
     <form action="">
         <input id="target" type="text">
-        <button id="btnPlay">Play</button>
+        <button id="btnPlay">Resize</button>
     </form>
     <div class="robot" id="robot1">
         <img src="/asset/robot.jpg" />
@@ -55,6 +55,7 @@
 
         $(function () {
             var socket = io();
+            $("#target").hide();
             $(btnPlay).on( "click", function() {
                 var wind = { wRight : windRight, wDown : windDown };
                 console.log('right: ' + wind.wRight + ' ' + 'down: ' + wind.wDown);
