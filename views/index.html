@@ -62,9 +62,40 @@
             });
 
 
-            /**
-             * Event
-             */
+
+            $(document).keydown(function(e) {
+                console.log(e.which);
+
+                var position = $(".robot").position();
+                var position = $(robot1).position();
+                var left = position.left;
+                var top = position.top;
+                var right = $( window ).width(); 
+                var down = $( window ).height();
+
+                console.log("left: " + left + ' ' + "top: " + top + ' ' + "right: " + right + ' ' + "down: " + down);
+
+                var a =12;
+                switch (e.which) {
+                    case 37: // Left
+                        $(btnLeft).click();
+                        break;
+                    case 38: // Up
+                        $(btnTop).click();
+                        break;
+                    case 39: // Right
+                        $(btnRight).click();
+                        break;
+                    case 40: // Down
+                        $(btnDown).click();
+                        break;
+                }
+            });
+
+
+            // /**
+            //  * Event
+            //  */
             $(btnLeft).on( "click", function() {
                 socket.emit('btnLeft');
             });
