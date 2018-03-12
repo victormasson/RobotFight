@@ -12,7 +12,7 @@
             width: 100px;
             height: 100px;
             position: absolute;
-            /* margin: 0px auto 0; */
+            margin: 0px auto 0;
             /* background: yellowgreen; */
         }
 
@@ -29,6 +29,7 @@
         <input id="target" type="text">
         <button id="btnPlay">Resize</button>
     </form>
+
     <div class="robot" id="robot1">
         <img src="/asset/robot.png" />
     </div>
@@ -37,11 +38,16 @@
     </div>
 
     <div class="bottom">
-        <input type="button" id="btnTop" value="Top">
-        <input type="button" id="btnDown" value="Down">
-        <input type="button" id="btnLeft" value="Left">
-        <input type="button" id="btnRight" value="Right">
+        <input type="button" id="btnTop" value="Top" style="display: none">
+        <input type="button" id="btnDown" value="Down" style="display: none">
+        <input type="button" id="btnLeft" value="Left" style="display: none">
+        <input type="button" id="btnRight" value="Right" style="display: none">
     </div>
+
+    <script type="text/javascript">
+        var audio = new Audio('/asset/music.mp3');
+        audio.play();
+    </script>
 
     <script type="text/javascript">
         /**
@@ -63,14 +69,14 @@
             $("#target").hide();
             $(btnPlay).on( "click", function() {
                 var wind = { wRight : windRight, wDown : windDown };
-                console.log('right: ' + wind.wRight + ' ' + 'down: ' + wind.wDown);
+                //console.log('right: ' + wind.wRight + ' ' + 'down: ' + wind.wDown);
                 socket.emit('btnPlay', wind);
             });
 
 
 
             $(document).keydown(function(e) {
-                console.log(e.which);
+                // console.log(e.which);
 
                 var position = $(".robot").position();
                 var position = $(robot1).position();
@@ -100,7 +106,6 @@
                         break;
                 }
             });
-
 
             // /**
             //  * Event
@@ -144,7 +149,7 @@
                 $(robot1).css('left', placeBonome.left);
                 $(robot1).css('top', placeBonome.top);
             });
-
+            
             $(btnSpace).on( "click", function() {
                 socket.emit('btnSpace');
             });

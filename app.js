@@ -3,7 +3,7 @@ const express = require('express');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-app.use('/asset', express.static(__dirname + '/img/'));
+app.use('/asset', express.static(__dirname + '/resources/'));
 
 
 app.get('/', function(req, res) {
@@ -15,13 +15,14 @@ app.get('/', function(req, res) {
 // });
 
 var placeBonome = { left : 0, top : 0 };
+var placeWindows = { right : 0, down : 0 };
+var element = { x : 0, y : 0, x1 : 0, y1 : 0};
 var placeFireBall = { left : 0, top : 0 };
 var placeWindows = { right : 0, down : 0 };
 
 //Création écouteur sockets
 io.on('connection', function(socket){
     console.log('a user connected');
-    // console.log(socket);
 
     socket.on('btnPlay', function(msg){
         console.log(msg);
@@ -30,10 +31,10 @@ io.on('connection', function(socket){
     });
 
     socket.on('btnLeft', function(){
-        console.log('btnLeft');
+        //console.log('btnLeft');
         if (placeBonome.left > 0) {
             placeBonome.left -= 20;
-            console.log('btnLeft: ' + placeBonome.left);
+            //console.log('btnLeft: ' + placeBonome.left);
         
         }
         socket.emit('btnLeft', placeBonome);
@@ -43,27 +44,27 @@ io.on('connection', function(socket){
     socket.on('btnRight', function(){
         if (placeBonome.left + 200 < placeWindows.right) {
             placeBonome.left += 20;
-            console.log('btnRight: ' + placeBonome.left);
+            // console.log('btnRight: ' + placeBonome.left);
         }
         socket.emit('btnRight', placeBonome);
         socket.broadcast.emit('btnRight', placeBonome);
     });
 
     socket.on('btnTop', function(){
-        console.log('btnTop');
+        // console.log('btnTop');
         if (placeBonome.top - 25 > 0) {
             placeBonome.top -= 20;
-            console.log('btnTop: ' + placeBonome.top);
+            // console.log('btnTop: ' + placeBonome.top);
         }
         socket.emit('btnTop', placeBonome);
         socket.broadcast.emit('btnTop', placeBonome);
     });
 
     socket.on('btnDown', function(){
-        console.log('btnDown');
+        // console.log('btnDown');
         if (placeBonome.top + 350 < placeWindows.down) {
             placeBonome.top += 20;
-            console.log('btnDown: ' + placeBonome.top);
+            // console.log('btnDown: ' + placeBonome.top);
         }
         socket.emit('btnDown', placeBonome);
         socket.broadcast.emit('btnDown', placeBonome);
@@ -81,7 +82,7 @@ io.on('connection', function(socket){
 });
 
 
-
-http.listen(3000, function(){
-    console.log('listening on *:3000');
+const port = 9909;
+http.listen(port, function(){
+    console.log('listening on *:' + port);
 });
