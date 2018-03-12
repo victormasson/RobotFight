@@ -30,8 +30,9 @@
         <button id="btnPlay">Resize</button>
     </form>
 
-    <div class="robot" id="robot1" style="size: 50%">
+    <div class="robot" id="robot1">
         <img src="/asset/robot.png" />
+        <img src="/asset/bouleDeFeu.png" />
     </div>
 
     <div class="bottom">
@@ -42,10 +43,16 @@
     </div>
 
     <script type="text/javascript">
+        var audio = new Audio('/asset/music.mp3');
+        audio.play();
+    </script>
+
+    <script type="text/javascript">
         /**
          * Const
          */
         const robot1 = '#robot1';
+        const fireBall1 = '#fireBall1';
         const btnPlay = '#btnPlay';
         const btnTop = '#btnTop';
         const btnDown = '#btnDown';
@@ -59,14 +66,14 @@
             $("#target").hide();
             $(btnPlay).on( "click", function() {
                 var wind = { wRight : windRight, wDown : windDown };
-                console.log('right: ' + wind.wRight + ' ' + 'down: ' + wind.wDown);
+                //console.log('right: ' + wind.wRight + ' ' + 'down: ' + wind.wDown);
                 socket.emit('btnPlay', wind);
             });
 
 
 
             $(document).keydown(function(e) {
-                console.log(e.which);
+                // console.log(e.which);
 
                 var position = $(".robot").position();
                 var position = $(robot1).position();
@@ -89,6 +96,9 @@
                         $(btnRight).click();
                         break;
                     case 40: // Down
+                        $(btnDown).click();
+                        break;
+                    case 32 : // spacebar
                         $(btnDown).click();
                         break;
                 }
@@ -135,6 +145,16 @@
                 console.log('placeBonome: ' + placeBonome);
                 $(robot1).css('left', placeBonome.left);
                 $(robot1).css('top', placeBonome.top);
+            });
+            
+            $(btnSpace).on( "click", function() {
+                socket.emit('btnSpace');
+            });
+
+            socket.on('btnSpace', function(placeFireBall){
+                console.log('placeFireBall: ' + placeFireBall);
+                $(fireBall1).css('left', placeFireBall.left);
+                $(fireBall1).css('top', placeFireBall.top);
             });
         });
     </script>

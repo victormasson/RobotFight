@@ -3,7 +3,7 @@ const express = require('express');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-app.use('/asset', express.static(__dirname + '/img/'));
+app.use('/asset', express.static(__dirname + '/resources/'));
 
 
 app.get('/', function(req, res) {
@@ -15,8 +15,10 @@ app.get('/', function(req, res) {
 // });
 
 var placeBonome = { left : 0, top : 0 };
-var placeWindows = { right : 0, down : 0, elmnt };
+var placeWindows = { right : 0, down : 0 };
 var element = { x : 0, y : 0, x1 : 0, y1 : 0};
+var placeFireBall = { left : 0, top : 0 };
+var placeWindows = { right : 0, down : 0 };
 
 //Création écouteur sockets
 io.on('connection', function(socket){
@@ -66,6 +68,16 @@ io.on('connection', function(socket){
         }
         socket.emit('btnDown', placeBonome);
         socket.broadcast.emit('btnDown', placeBonome);
+    });
+
+    socket.on('btnSpace', function(){
+        console.log('btnSpace');
+        if (placeFireBall.top > 0) {
+            placeFireBall.top -= 20;
+            console.log('btnSpace: ' + placeFireBall.top);
+        }
+        socket.emit('btnSpace', placeFireBall);
+        socket.broadcast.emit('btnSpace', placeFireBall);
     });
 });
 
