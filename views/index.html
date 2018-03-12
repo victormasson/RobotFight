@@ -13,7 +13,7 @@
             height: 100px;
             position: absolute;
             /* margin: 0px auto 0; */
-            background: yellowgreen;
+            /* background: yellowgreen; */
         }
 
         .bottom{
@@ -30,8 +30,8 @@
         <button id="btnPlay">Resize</button>
     </form>
     <div class="robot" id="robot1">
-        <img src="/asset/robot.jpg" />
-        <img src="/asset/bouleDeFeu.jpg" />
+        <img src="/asset/robot.png" />
+        <img src="/asset/bouleDeFeu.png" />
     </div>
 
     <div class="bottom">
@@ -40,6 +40,11 @@
         <input type="button" id="btnLeft" value="Left">
         <input type="button" id="btnRight" value="Right">
     </div>
+
+    <script type="text/javascript">
+        var audio = new Audio('/asset/music.mp3');
+        audio.play();
+    </script>
 
     <script type="text/javascript">
         /**
