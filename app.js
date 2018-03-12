@@ -15,6 +15,7 @@ app.get('/', function(req, res) {
 // });
 
 var placeBonome = { left : 0, top : 0 };
+var placeFireBall = { left : 0, top : 0 };
 var placeWindows = { right : 0, down : 0 };
 
 //Création écouteur sockets
@@ -66,6 +67,16 @@ io.on('connection', function(socket){
         }
         socket.emit('btnDown', placeBonome);
         socket.broadcast.emit('btnDown', placeBonome);
+    });
+
+    socket.on('btnSpace', function(){
+        console.log('btnSpace');
+        if (placeFireBall.top > 0) {
+            placeFireBall.top -= 20;
+            console.log('btnSpace: ' + placeFireBall.top);
+        }
+        socket.emit('btnSpace', placeFireBall);
+        socket.broadcast.emit('btnSpace', placeFireBall);
     });
 });
 

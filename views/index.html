@@ -51,11 +51,13 @@
          * Const
          */
         const robot1 = '#robot1';
+        const fireBall1 = '#fireBall1';
         const btnPlay = '#btnPlay';
         const btnTop = '#btnTop';
         const btnDown = '#btnDown';
         const btnLeft = '#btnLeft';
         const btnRight = '#btnRight';
+        const btnDown = '#btnDown';
         var windRight = $( window ).width(); 
         var windDown = $( window ).height();
 
@@ -94,6 +96,9 @@
                         $(btnRight).click();
                         break;
                     case 40: // Down
+                        $(btnDown).click();
+                        break;
+                    case 32 : // spacebar
                         $(btnDown).click();
                         break;
                 }
@@ -141,6 +146,16 @@
                 console.log('placeBonome: ' + placeBonome);
                 $(robot1).css('left', placeBonome.left);
                 $(robot1).css('top', placeBonome.top);
+            });
+
+            $(btnSpace).on( "click", function() {
+                socket.emit('btnSpace');
+            });
+
+            socket.on('btnSpace', function(placeFireBall){
+                console.log('placeFireBall: ' + placeFireBall);
+                $(fireBall1).css('left', placeFireBall.left);
+                $(fireBall1).css('top', placeFireBall.top);
             });
         });
     </script>
