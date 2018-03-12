@@ -32,7 +32,9 @@
 
     <div class="robot" id="robot1">
         <img src="/asset/robot.png" />
-        <img src="/asset/bouleDeFeu.png" />
+    </div>
+    <div class="fireBall" id="fireBall1">
+        <img src="/asset/bouleDeFeu.png" height="50" width="50" style="display:none"/>
     </div>
 
     <div class="bottom">
@@ -58,6 +60,7 @@
         const btnDown = '#btnDown';
         const btnLeft = '#btnLeft';
         const btnRight = '#btnRight';
+        const btnSpace = '#btnSpace';
         var windRight = $( window ).width(); 
         var windDown = $( window ).height();
 
@@ -99,7 +102,7 @@
                         $(btnDown).click();
                         break;
                     case 32 : // spacebar
-                        $(btnDown).click();
+                        $(btnSpace).click();
                         break;
                 }
             });

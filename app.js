@@ -75,12 +75,12 @@ io.on('connection', function(socket){
 
     socket.on('btnSpace', function(){
         console.log('btnSpace');
-        if (placeFireBall.top > 0) {
+        while (placeFireBall.top > 0) {
             placeFireBall.top -= 20;
             console.log('btnSpace: ' + placeFireBall.top);
+            socket.emit('btnSpace', placeFireBall);
+            socket.broadcast.emit('btnSpace', placeFireBall);
         }
-        socket.emit('btnSpace', placeFireBall);
-        socket.broadcast.emit('btnSpace', placeFireBall);
     });
 });
 
