@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
 var placeBonome = { left : 0, top : 0 };
 var placeWindows = { right : 0, down : 0 };
 var element = { x : 0, y : 0, x1 : 0, y1 : 0};
-var placeFireBall = { left : 0, top : 0 };
+var placeFireBall = { left : 50, top : 0 };
 var placeWindows = { right : 0, down : 0 };
 
 //Création écouteur sockets
@@ -34,6 +34,7 @@ io.on('connection', function(socket){
         //console.log('btnLeft');
         if (placeBonome.left > 0) {
             placeBonome.left -= 20;
+            placeFireBall.left -= 20;
             //console.log('btnLeft: ' + placeBonome.left);
         
         }
@@ -44,6 +45,7 @@ io.on('connection', function(socket){
     socket.on('btnRight', function(){
         if (placeBonome.left + 200 < placeWindows.right) {
             placeBonome.left += 20;
+            placeFireBall.left += 20;
             // console.log('btnRight: ' + placeBonome.left);
         }
         socket.emit('btnRight', placeBonome);
@@ -54,6 +56,7 @@ io.on('connection', function(socket){
         // console.log('btnTop');
         if (placeBonome.top - 25 > 0) {
             placeBonome.top -= 20;
+            placeFireBall.top -= 20;
             // console.log('btnTop: ' + placeBonome.top);
         }
         socket.emit('btnTop', placeBonome);
@@ -64,6 +67,7 @@ io.on('connection', function(socket){
         // console.log('btnDown');
         if (placeBonome.top + 350 < placeWindows.down) {
             placeBonome.top += 20;
+            placeFireBall.top += 20;
             // console.log('btnDown: ' + placeBonome.top);
         }
         socket.emit('btnDown', placeBonome);
@@ -72,9 +76,8 @@ io.on('connection', function(socket){
 
     socket.on('btnSpace', function(){
         console.log('btnSpace');
-        while (placeFireBall.top > 0) {
+        if (placeFireBall.top > 0) {    
             placeFireBall.top -= 20;
-            console.log('btnSpace: ' + placeFireBall.top);
             socket.emit('btnSpace', placeFireBall);
             socket.broadcast.emit('btnSpace', placeFireBall);
         }
