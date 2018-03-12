@@ -28,6 +28,9 @@ io.on('connection', function(socket){
         console.log(msg);
         placeWindows.right = msg.wRight;
         placeWindows.down = msg.wDown;
+
+        placeBonome.left = 0;
+        placeBonome.top = 0;
     });
 
     socket.on('btnLeft', function(){
