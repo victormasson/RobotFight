@@ -12,8 +12,8 @@
             width: 100px;
             height: 100px;
             position: absolute;
-            /* margin: 0px auto 0; */
-            background: yellowgreen;
+            margin: 0px auto 0;
+            /* background: yellowgreen; */
         }
 
         .bottom{
@@ -29,16 +29,16 @@
         <input id="target" type="text">
         <button id="btnPlay">Resize</button>
     </form>
-    <div class="robot" id="robot1">
-        <img src="/asset/robot.jpg" />
-        <img src="/asset/bouleDeFeu.jpg" />
+
+    <div class="robot" id="robot1" style="size: 50%">
+        <img src="/asset/robot.png" />
     </div>
 
     <div class="bottom">
-        <input type="button" id="btnTop" value="Top">
-        <input type="button" id="btnDown" value="Down">
-        <input type="button" id="btnLeft" value="Left">
-        <input type="button" id="btnRight" value="Right">
+        <input type="button" id="btnTop" value="Top" style="display: none">
+        <input type="button" id="btnDown" value="Down" style="display: none">
+        <input type="button" id="btnLeft" value="Left" style="display: none">
+        <input type="button" id="btnRight" value="Right" style="display: none">
     </div>
 
     <script type="text/javascript">
@@ -93,7 +93,6 @@
                         break;
                 }
             });
-
 
             // /**
             //  * Event
