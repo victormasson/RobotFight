@@ -16,6 +16,14 @@
             /* background: yellowgreen; */
         }
 
+        .fireBall{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            margin: 0px auto 0;
+            /* background: yellowgreen; */
+        }
+
         .bottom{
             padding: 3px;
             position: fixed;
@@ -33,8 +41,8 @@
     <div class="robot" id="robot1">
         <img src="/asset/robot.png" />
     </div>
-    <div class="fireBall" id="fireBall1">
-        <img src="/asset/bouleDeFeu.png" height="50" width="50" style="display:none"/>
+    <div class="fireBall" id="fireBall1" style="display:none">
+        <img src="/asset/bouleDeFeu.png" height="50" width="50"/>
     </div>
 
     <div class="bottom">
@@ -42,6 +50,7 @@
         <input type="button" id="btnDown" value="Down" style="display: none">
         <input type="button" id="btnLeft" value="Left" style="display: none">
         <input type="button" id="btnRight" value="Right" style="display: none">
+        <input type="button" id="btnSpace" value="Space" style="display: none">
     </div>
 
     <script type="text/javascript">
@@ -156,9 +165,31 @@
             });
 
             socket.on('btnSpace', function(placeFireBall){
-                console.log('placeFireBall: ' + placeFireBall);
+                console.log('CLIENT : ' + placeFireBall.top + " - "  + placeFireBall.left);
+                
                 $(fireBall1).css('left', placeFireBall.left);
-                $(fireBall1).css('top', placeFireBall.top);
+                $(fireBall1).css('display', '');
+                
+                var moveFireBall = setInterval(frame, 10);
+                function frame() {
+                    if (placeFireBall.top < -50) {
+                        console.log("Delete");
+                        clearInterval(moveFireBall);
+                        $(fireBall1).css('display', 'nome');
+                    } 
+                    else {
+                        placeFireBall.top-=10;
+                        $(fireBall1).css('top', placeFireBall.top);                        
+                    }
+                }
+
+                // while(placeFireBall.top > 0){
+                //     console.log("ici : " + placeFireBall.top);
+                //     setTimeout(function () {
+                //         console.log("Là : " + placeFireBall.top);                        
+                //         $(fireBall1).css('top', placeFireBall.top);
+                //     }, 1000);
+                // }
             });
         });
     </script>
