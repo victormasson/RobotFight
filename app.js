@@ -87,5 +87,5 @@ io.on('connection', function(socket){
 
 const port = 9909;
 http.listen(port, function(){
-    console.log('listening on *:' + port);
+    console.log('listening on *: http://localhost:' + port);
 });
