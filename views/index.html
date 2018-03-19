@@ -33,16 +33,15 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="">
-        <input id="target" type="text">
-        <button id="btnPlay">Resize</button>
-    </form>
+    <input id="target" type="text">
+    <h1 id="btnPlay" style="cursor: pointer">Start</h1>
+
 
     <div class="robot" id="robot1">
         <img src="/asset/robot.png" />
     </div>
-    <div class="fireBall" id="fireBall1" style="display:none">
-        <img src="/asset/bouleDeFeu.png" height="50" width="50"/>
+    <div id="fireBalls" class="fireBalls">
+        
     </div>
 
     <div class="bottom">
@@ -72,22 +71,30 @@
         const btnSpace = '#btnSpace';
         var windRight = $( window ).width(); 
         var windDown = $( window ).height();
+        var numBalls = 0;
 
         $(function () {
             var socket = io();
             $("#target").hide();
+            //$(robot1).hide();
+            
             $(btnPlay).on( "click", function() {
                 var wind = { wRight : windRight, wDown : windDown };
-                //console.log('right: ' + wind.wRight + ' ' + 'down: ' + wind.wDown);
                 socket.emit('btnPlay', wind);
+                console.log("show robot");
+
+                $(robot1).show();
+            });
+
+            socket.on('btnPlay', function(placeBonome){
+                $(robot1).css('left', placeBonome.left);
+                $(robot1).css('top', placeBonome.top);
             });
 
 
 
             $(document).keydown(function(e) {
-                // console.log(e.which);
 
-                var position = $(".robot").position();
                 var position = $(robot1).position();
                 var left = position.left;
                 var top = position.top;
@@ -160,13 +167,19 @@
             });
             
             $(btnSpace).on( "click", function() {
-                socket.emit('btnSpace');
+                if($(".fireBalls").children().length == 0){
+                    socket.emit('btnSpace');
+                }
             });
 
             socket.on('btnSpace', function(placeFireBall){
                 console.log('CLIENT : ' + placeFireBall.top + " - "  + placeFireBall.left);
-                
+
+                //Add fireBall
+                $(".fireBalls").append("<div class='fireBall' id='fireBall1' style='display:none'><img src='/asset/bouleDeFeu.png' height='50' width='50'/></div>");
+
                 $(fireBall1).css('left', placeFireBall.left);
+                $(fireBall1).css('top', placeFireBall.top);
                 $(fireBall1).css('display', '');
                 
                 var moveFireBall = setInterval(frame, 10);
@@ -174,21 +187,14 @@
                     if (placeFireBall.top < -50) {
                         console.log("Delete");
                         clearInterval(moveFireBall);
-                        $(fireBall1).css('display', 'nome');
+                        $(fireBall1).css('display', 'none');
+                        $( ".fireBall" ).remove();
                     } 
                     else {
                         placeFireBall.top-=10;
                         $(fireBall1).css('top', placeFireBall.top);                        
                     }
                 }
-
-                // while(placeFireBall.top > 0){
-                //     console.log("ici : " + placeFireBall.top);
-                //     setTimeout(function () {
-                //         console.log("Là : " + placeFireBall.top);                        
-                //         $(fireBall1).css('top', placeFireBall.top);
-                //     }, 1000);
-                // }
             });
         });
     </script>
