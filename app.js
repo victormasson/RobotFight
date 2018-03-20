@@ -29,8 +29,8 @@ io.on('connection', function(socket){
         placeWindows.right = msg.wRight;
         placeWindows.down = msg.wDown;
 
-        placeBonome.left = 40;
-        placeBonome.top = 40;
+        placeBonome.left = msg.wRight/2;
+        placeBonome.top = msg.wDown/2;
 
         socket.emit('btnPlay', placeBonome);
         socket.broadcast.emit('btnPlay', placeBonome);

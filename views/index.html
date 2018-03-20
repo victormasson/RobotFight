@@ -33,7 +33,6 @@
     <title>Document</title>
 </head>
 <body>
-    <input id="target" type="text">
     <h1 id="btnPlay" style="cursor: pointer">Start</h1>
 
 
@@ -76,8 +75,7 @@
         $(function () {
 
             var socket = io();
-            $("#target").hide();
-            //$(robot1).hide();
+            $(robot1).hide();
             
             $(btnPlay).on( "click", function() {
                 var wind = { wRight : windRight, wDown : windDown };
