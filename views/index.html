@@ -16,6 +16,14 @@
             /* background: yellowgreen; */
         }
 
+        .spaceship{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            margin: 0px auto 0;
+            /* background: yellowgreen; */
+        }
+
         .fireBall{
             width: 100px;
             height: 100px;
@@ -30,11 +38,14 @@
             bottom: 0;
         }
     </style>
-    <title>Document</title>
+    <title>Space</title>
 </head>
 <body>
     <h1 id="btnPlay" style="cursor: pointer">Start</h1>
 
+    <div class="spaceship" id="spaceship1">
+        <img id="imgSpaceship" src="/asset/spaceship.gif" width="250"/>
+    </div>
 
     <div class="robot" id="robot1">
         <img src="/asset/robot.png" />
@@ -62,6 +73,7 @@
          */
         const robot1 = '#robot1';
         const fireBall1 = '#fireBall1';
+        const spaceship1 = '#spaceship1';
         const btnPlay = '#btnPlay';
         const btnTop = '#btnTop';
         const btnDown = '#btnDown';
@@ -70,12 +82,13 @@
         const btnSpace = '#btnSpace';
         var windRight = $( window ).width(); 
         var windDown = $( window ).height();
-        var numBalls = 0;
+        var moveSpaceshit;
 
         $(function () {
 
             var socket = io();
             $(robot1).hide();
+            $(spaceship1).hide();
             
             $(btnPlay).on( "click", function() {
                 var wind = { wRight : windRight, wDown : windDown };
@@ -83,11 +96,26 @@
                 console.log("show robot");
 
                 $(robot1).show();
+                $(spaceship1).show();
             });
 
-            socket.on('btnPlay', function(placeBonome){
-                $(robot1).css('left', placeBonome.left);
-                $(robot1).css('top', placeBonome.top);
+            socket.on('btnPlay', function(msg){
+                $(robot1).css('left', msg.placeBonome.left);
+                $(robot1).css('top', msg.placeBonome.top);
+
+                moveSpaceshit = setInterval(frame, 10);
+                function frame() {
+                    if (msg.placeSpaceshit.left > 10 && msg.placeSpaceshit.left < (windRight-250)) {
+                        $(spaceship1).animate({ left : windRight-300}, 3000);
+                        $(spaceship1).animate({ left : 100}, 2500);
+                    }   
+                    else{
+                        console.log("Delete");
+                        clearInterval(moveSpaceshit);
+                        $(fireBall1).css('display', 'none');
+                        $( ".fireBall" ).remove();
+                    }
+                }
             });
 
 
@@ -175,7 +203,7 @@
                 console.log('CLIENT : ' + placeFireBall.top + " - "  + placeFireBall.left);
 
                 //Add fireBall
-                $(".fireBalls").append("<div class='fireBall' id='fireBall1' style='display:none'><img src='/asset/bouleDeFeu.png' height='50' width='50'/></div>");
+                $(".fireBalls").append("<div class='fireBall' id='fireBall1' style='display:none'><img id='imgFireBall' src='/asset/bouleDeFeu.png' height='50' width='50'/></div>");
 
                 $(fireBall1).css('left', placeFireBall.left);
                 $(fireBall1).css('top', placeFireBall.top);
@@ -183,19 +211,47 @@
                 
                 var moveFireBall = setInterval(frame, 10);
                 function frame() {
-                    if (placeFireBall.top < -50) {
+                    if(collision($("#imgSpaceship"), $("#imgFireBall"))){
+                        alert("YOU WIN !");
+                        $( ".fireBall" ).remove();
+                        $(spaceship1).css('display', 'none');
+                        clearInterval(moveFireBall);                        
+                        clearInterval(moveSpaceshit);                        
+                    }
+                    else if (placeFireBall.top < -50) {
                         console.log("Delete");
                         clearInterval(moveFireBall);
-                        $(fireBall1).css('display', 'none');
+                        clearInterval(moveSpaceshit);                        
                         $( ".fireBall" ).remove();
                     } 
                     else {
                         placeFireBall.top-=10;
                         $(fireBall1).css('top', placeFireBall.top);                        
                     }
+
                 }
             });
+
+
         });
+
+        function collision($div1, $div2) {
+            var x1 = $div1.offset().left;
+            var y1 = $div1.offset().top;
+            var h1 = $div1.outerHeight(true);
+            var w1 = $div1.outerWidth(true);
+            var b1 = y1 + h1;
+            var r1 = x1 + w1;
+            var x2 = $div2.offset().left;
+            var y2 = $div2.offset().top;
+            var h2 = $div2.outerHeight(true);
+            var w2 = $div2.outerWidth(true);
+            var b2 = y2 + h2;
+            var r2 = x2 + w2;
+
+            if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+            return true;
+        }
     </script>
 </body>
 </html>

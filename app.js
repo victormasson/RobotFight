@@ -18,6 +18,7 @@ var placeBonome = { left : 40, top : 40 };
 var placeWindows = { right : 0, down : 0 };
 var element = { x : 0, y : 0, x1 : 0, y1 : 0};
 var placeFireBall = { left : 0, top : 0 };
+var placeSpaceshit = { left : 0, top : 0 };
 var placeWindows = { right : 0, down : 0 };
 
 //Création écouteur sockets
@@ -29,11 +30,17 @@ io.on('connection', function(socket){
         placeWindows.right = msg.wRight;
         placeWindows.down = msg.wDown;
 
+        placeFireBall.left = 0;
+        placeFireBall.top = 0;
+
         placeBonome.left = msg.wRight/2;
         placeBonome.top = msg.wDown/2;
 
-        socket.emit('btnPlay', placeBonome);
-        socket.broadcast.emit('btnPlay', placeBonome);
+        placeSpaceshit.left = msg.wRight/2;
+        placeSpaceshit.top = msg.wDown/2;
+
+        socket.emit('btnPlay', { placeBonome : placeBonome, placeSpaceshit : placeSpaceshit});
+        socket.broadcast.emit('btnPlay', { placeBonome : placeBonome, placeSpaceshit : placeSpaceshit});
     });
 
     socket.on('btnLeft', function(){
